@@ -7,13 +7,25 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabasePublishableKey = process.env.EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-if (!supabaseUrl || !supabasePublishableKey) console.warn('Supabase env vars are missing. Check your .env file.');
+// createClient() throws on a missing URL, which would crash the app at import time
+// for anyone who cloned the repo without a .env. Stay null instead and let the UI
+// render a "not configured" panel.
+export const configured = Boolean(supabaseUrl && supabasePublishableKey);
 
-export const supabase = createClient(supabaseUrl, supabasePublishableKey, {
-  auth: {
-    storage: AsyncStorage,
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false,
-  },
-});
+if (!configured) {
+  console.warn(
+    'Supabase is not configured. Set EXPO_PUBLIC_SUPABASE_URL and ' +
+      'EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY in .env (see .env.example).'
+  );
+}
+
+export const supabase = configured
+  ? createClient(supabaseUrl!, supabasePublishableKey!, {
+      auth: {
+        storage: AsyncStorage,
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: false,
+      },
+    })
+  : null;
