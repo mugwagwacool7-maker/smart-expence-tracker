@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Smart Expense Tracker",
+    "slug": "smart-expense-tracker",
+    "scheme": "expensetracker",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#0F172A",
+    "plugins": [
+      "expo-router",
+      "expo-notifications",
+      "expo-image-picker",
+      "expo-font"
+    ]
+  }
+}

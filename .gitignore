@@ -1,0 +1,21 @@
+node_modules/
+.expo/
+dist/
+web-build/
+*.log
+
+# Secrets — the anon key is safe to ship, the service_role key and
+# ANTHROPIC_API_KEY are not
+.env
+.env.local
+.env*.local
+
+# Native build output
+ios/
+android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
